@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Member">
+ <insert id="memberjoin" parameterType="member">
+   INSERT INTO MEMBER(MID,MPASSWORD,MNAME,MBIRTH,MEMAIL,MPOSTNUM,MADDRESSROAD,MADDRESSJIBUN,MADDRESS,MADDRESS1,MPHONE,MFILENAME) VALUES(#{mid},#{mpassword},#{mname},#{mbirth},#{memail},#{mpostnum},#{maddressroad},#{maddressjibun},#{maddress},#{maddress1},#{mphone},#{mfilename})
+     
+ </insert>
+ 
+ <select id="memberlogin" parameterType="member" resultType="String">
+ SELECT * FROM MEMBER WHERE MID=#{mid} AND MPASSWORD=#{mpassword}
+ </select>
+ 
+ <select id="memberlist" resultType="member">
+ SELECT * FROM MEMBER
+ </select>
+ 
+ <select id="memberview" parameterType="String" resultType="member">
+ SELECT * FROM MEMBER WHERE MID=#{mid}
+ </select>
+ 
+ <delete id="memberdelete" parameterType="String">
+ DELETE FROM MEMBER WHERE MID=#{MID}
+ </delete>
+ 
+ <update id="memberupdate" parameterType="member">
+ UPDATE MEMBER SET MFILENAME=#{mfilename}, MNAME=#{mname}, MPOSTNUM=#{mpostnum}, MADDRESSROAD=#{maddressroad}, MADDRESSJIBUN=#{maddressjibun}, MADDRESS=#{maddress}, MADDRESS1=#{maddress1}, MPHONE=#{mphone}, MEMAIL=#{memail} WHERE MID=#{mid}
+ </update>
+ 
+ <insert id="kakaomemberjoin" parameterType="member">
+    INSERT INTO MEMBER(MID,KAKAOID,MPASSWORD,MNAME,MBIRTH,MEMAIL,MPOSTNUM,MADDRESSROAD,MADDRESSJIBUN,MADDRESS,MADDRESS1,MPHONE,MFILENAME) VALUES(#{mid},#{kakaoId},#{mpassword},#{mname},#{mbirth},#{memail},#{mpostnum},#{maddressroad},#{maddressjibun},#{maddress},#{maddress1},#{mphone},#{mfilename})
+    
+    </insert>
+    
+  <insert id="navermemberjoin" parameterType="member">
+    INSERT INTO MEMBER(MID,NAVERID,MPASSWORD,MNAME,MBIRTH,MEMAIL,MPOSTNUM,MADDRESSROAD,MADDRESSJIBUN,MADDRESS,MADDRESS1,MPHONE,MFILENAME) VALUES(#{mid},#{naverId},#{mpassword},#{mname},#{mbirth},#{memail},#{mpostnum},#{maddressroad},#{maddressjibun},#{maddress},#{maddress1},#{mphone},#{mfilename})
+    
+    </insert>
+  <select id="kakaologin" parameterType="String" resultType="String">
+    SELECT MID FROM MEMBER WHERE KAKAOID=#{kakaoId}
+    
+    </select>
+  <select id="naverlogin" parameterType="String" resultType="String">
+    SELECT MID FROM MEMBER WHERE NAVERID=#{naverId}
+    
+    </select>
+  <select id="idOverlap" parameterType="String" resultType="String">
+    SELECT MID FROM MEMBER WHERE MID=#{mid}
+    </select>
+	
+	
+	
+	
+	
+	
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

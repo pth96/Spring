@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Board">
+ <insert id="boardwrite" parameterType="board">
+ 		INSERT INTO BOARD(BNUMBER,BWRITER,BTITLE,BCONTENTS,BDATE,BHITS,BFILENAME) VALUES(BNUMBER_SEQ.NEXTVAL,#{bwriter},#{btitle},#{bcontents},SYSDATE,0,#{bfilename})
+ 	</insert>
+ 	
+ <select id="boardlistcount" resultType="int">
+      SELECT COUNT(BNUMBER) FROM BOARD
+ </select>
+ 
+ <select id="boardlist" parameterType="page" resultType="board">
+     SELECT * FROM (SELECT B.*, ROW_NUMBER() OVER(ORDER BY BNUMBER DESC) AS RN FROM BOARD B) WHERE RN BETWEEN #{startRow} AND #{endRow}
+ </select>
+ 
+ <update id="boardhits" parameterType="int">
+ 		UPDATE BOARD SET BHITS = BHITS+1 WHERE BNUMBER=#{bnumber}
+ 	</update>
+ 	
+ <select id="boardview" parameterType="int" resultType="board">
+ 		SELECT * FROM BOARD WHERE BNUMBER=#{bnumber}
+ 	</select>
+ 	
+ <update id="boardupdateurocess" parameterType="board">
+ 		UPDATE BOARD SET BTITLE=#{btitle}, BCONTENTS=#{bcontents}, BFILENAME=#{bfilename} WHERE BNUMBER=#{bnumber}
+ 	</update>
+ <delete id="boarddelete" parameterType="int">
+ 		DELETE FROM BOARD WHERE BNUMBER=#{bnumber}
+ 	</delete>
+ <select id="boardsearch" resultType="board" parameterType="java.util.HashMap">
+ 	   SELECT * FROM BOARD
+ 	       <include refid="search"></include>
+ 	</select>
+ 	
+ 	<sql id="search">
+ 	  <choose>
+ 	      <when test="type == 'searchtitle'">
+ 	         WHERE BTITLE LIKE '%'||#{word}||'%'
+ 	      </when>
+ 	      <when test="type == 'searchwriter'">
+ 	         WHERE BWRITER LIKE '%'||#{word}||'%'
+ 	      </when>    
+ 	  </choose>
+ 	
+ 	</sql>
+ <select id="hitslist" parameterType="page" resultType="board">
+     SELECT * FROM (SELECT B.*, ROW_NUMBER() OVER(ORDER BY BHITS DESC) AS RN FROM BOARD B) WHERE RN BETWEEN #{startRow} AND #{endRow}
+ </select>
+ 
+ <select id="hitslistcount" resultType="int">
+      SELECT COUNT(BNUMBER) FROM BOARD
+ </select>
+    
+
+	
+	
+	
+	
+	
+	
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
